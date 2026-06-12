@@ -340,7 +340,7 @@ sup { font-size: 0.6em; letter-spacing: 0; }
 }
 .is-loaded .edge { opacity: 1; }
 .edge-num   { left: 3.2rem; }
-.edge-brand { right: 3.2rem; }
+.edge-brand { display: none; }
 
 /* ==================================================================
    SCROLL RUNWAY + FOOTER

@@ -1,0 +1,5 @@
+# local working files — not part of the published site
+.claude/
+.DS_Store
+Screenshot*.png
+depo_luxe_page_description-v2.md

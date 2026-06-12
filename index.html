@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Archive — Eduardo Mitelman</title>
+  <meta name="description" content="A visual index of selected work. Design direction, brand strategy and AI execution — turning complexity into clear, actionable systems." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23F9F8F6'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='17' fill='%231A1A1A'%3EEM%3C/text%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="is-loading">
+
+  <!-- Full-bleed media stage (tonal plates, crossfaded on scroll) -->
+  <div class="stage" aria-hidden="true">
+    <div class="plate plate-a"></div>
+    <div class="plate plate-b"></div>
+    <div class="grain"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <a class="logo" href="#top" data-nav="archive">Eduardo&nbsp;Mitelman</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#" data-nav="page" style="--d:60ms">Featured</a>
+      <a href="#top" data-nav="archive" class="is-active" aria-current="page" style="--d:120ms">Archive</a>
+      <a href="#" data-nav="page" style="--d:180ms">Work</a>
+      <a href="#" data-nav="page" style="--d:240ms">Approach</a>
+      <a href="#" data-nav="page" style="--d:300ms">Contact</a>
+    </nav>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu">Menu</button>
+  </header>
+
+  <!-- The archive index — rows are injected from data.js -->
+  <div class="index-layer">
+    <ol class="index" aria-label="Archive index"></ol>
+  </div>
+
+  <!-- Focused work (content swapped on scroll) -->
+  <div class="focus" aria-hidden="true">
+    <span class="edge edge-num"></span>
+    <div class="focus-anim">
+      <h2 class="focus-title"><span class="focus-line"></span></h2>
+      <p class="focus-dir"></p>
+    </div>
+    <span class="edge edge-brand"></span>
+  </div>
+
+  <!-- Virtual scroll runway -->
+  <div class="scroll-space" id="top"></div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p class="footer-statement">Turning complexity into clear, <em>actionable</em> systems.</p>
+    <div class="footer-grid">
+      <ul class="footer-list" aria-label="Social">
+        <li><a href="#" data-nav="page">Instagram</a></li>
+        <li><a href="#" data-nav="page">Vimeo</a></li>
+        <li><a href="#" data-nav="page">LinkedIn</a></li>
+      </ul>
+      <ul class="footer-list" aria-label="Legal">
+        <li><a href="#" data-nav="page">Privacy Policy</a></li>
+        <li><a href="#" data-nav="page">Legal Notice</a></li>
+        <li><a href="#" data-nav="page">Cookies Policy</a></li>
+      </ul>
+      <p class="footer-copy">All work © Eduardo&nbsp;Mitelman, 2026</p>
+    </div>
+  </footer>
+
+  <!-- Mobile menu -->
+  <div class="menu" id="menu" hidden>
+    <nav aria-label="Menu">
+      <a href="#" data-nav="page" style="--d:100ms">Featured</a>
+      <a href="#top" data-nav="archive" class="is-active" style="--d:160ms">Archive</a>
+      <a href="#" data-nav="page" style="--d:220ms">Work</a>
+      <a href="#" data-nav="page" style="--d:280ms">Approach</a>
+      <a href="#" data-nav="page" style="--d:340ms">Contact</a>
+    </nav>
+  </div>
+
+  <!-- Cookie banner -->
+  <aside class="cookies" aria-label="Cookies" hidden>
+    <p class="cookies-text">We use necessary, analytical and advertising cookies to improve your experience. These cookies do not store any personally identifiable data.</p>
+    <div class="cookies-prefs" hidden>
+      <label><input type="checkbox" id="ck-analytics" checked /> Analytical</label>
+      <label><input type="checkbox" id="ck-ads" checked /> Advertising</label>
+    </div>
+    <div class="cookies-actions">
+      <button type="button" data-cookies="settings">Settings</button>
+      <button type="button" data-cookies="cancel">Cancel</button>
+      <button type="button" data-cookies="accept" class="is-solid">Accept</button>
+    </div>
+  </aside>
+
+  <!-- Page transition veil + intro -->
+  <div class="veil" aria-hidden="true"></div>
+  <div class="intro" aria-hidden="true">
+    <span class="intro-mark"><span>Eduardo Mitelman</span></span>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor" aria-hidden="true"></div>
+
+  <noscript>
+    <style>
+      .stage, .focus, .cursor, .intro, .veil, .scroll-space, .menu-toggle { display: none !important; }
+      body { cursor: auto; }
+      .index-layer { position: static; mix-blend-mode: normal; color: var(--ink); padding: 14.4rem 3.2rem 8rem; pointer-events: auto; }
+      .index { max-width: 48rem; margin: 0 auto; }
+      .index .row { position: static; opacity: 1 !important; visibility: visible !important; transform: none !important; margin: 0 0 1.2rem; }
+      .index .row-inner { opacity: 1 !important; transform: none !important; }
+      .index .row-dir { opacity: 1; }
+    </style>
+  </noscript>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

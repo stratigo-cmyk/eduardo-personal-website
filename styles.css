@@ -113,7 +113,7 @@ sup { font-size: 0.6em; letter-spacing: 0; }
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(26, 26, 26, 0.18);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 /* ghost numeral — the plate's editorial texture */

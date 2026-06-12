@@ -299,8 +299,7 @@ sup { font-size: 0.6em; letter-spacing: 0; }
   display: grid;
   place-content: center;
   text-align: center;
-  mix-blend-mode: difference;
-  color: var(--blend-ink);
+  color: #FFFFFF;
   pointer-events: none;
 }
 
@@ -329,7 +328,7 @@ sup { font-size: 0.6em; letter-spacing: 0; }
   opacity: 0;
   transition: opacity var(--t-slow) var(--ease) 800ms;
 }
-.is-loaded .focus-dir { opacity: 0.78; }
+.is-loaded .focus-dir { opacity: 1; }
 
 .edge {
   position: fixed;

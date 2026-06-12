@@ -23,7 +23,7 @@
   --blend-dim:  rgba(223, 222, 220, 0.62);
 
   /* type */
-  --serif: "Bodoni Moda", "Didot", "Bodoni MT", Georgia, serif;
+  --serif: "Arvo", "Bodoni MT", Georgia, serif;
   --sans:  "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
   /* easing (HAUS tokens + brief curve) */

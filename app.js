@@ -128,7 +128,7 @@
 
   /* ---------- focus content ---------- */
   function mountFocus(it) {
-    focusLine.textContent = `“${it.title}”`;
+    focusLine.textContent = it.title;
     focusDir.textContent = it.director;
     edgeNum.textContent = it.numeral;
     edgeBrand.textContent = it.label;

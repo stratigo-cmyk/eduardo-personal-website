@@ -143,6 +143,7 @@
        and the fallback when an item has no media */
     el.style.backgroundColor = it.tone.bg;
     el.style.backgroundImage = it.media ? `url("${it.media}")` : "";
+    el.style.backgroundPosition = it.focal || "";
     el.classList.toggle("has-media", Boolean(it.media));
     el.classList.toggle("is-light", !it.tone.dark);
     el.setAttribute("data-num", it.numeral);

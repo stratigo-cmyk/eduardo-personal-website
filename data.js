@@ -7,6 +7,7 @@
 /*    title    -> project name (shown as the large display title)      */
 /*    director -> your role / credit (shown under the title)           */
 /*    media    -> optional: "images/<file>.webp" (plate background)    */
+/*    focal    -> optional: CSS background-position (default center)   */
 /*                                                                     */
 /*  The engine takes any number of items — Roman numerals, plates      */
 /*  and scroll length adjust automatically.                            */

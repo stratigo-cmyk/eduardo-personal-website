@@ -17,12 +17,34 @@ All content lives in `data.js`. Each work is one line:
 ## 2 · Add an image to a work
 
 1. Export WebP, ~1600px wide, under ~200KB (use squoosh.app if needed).
-2. Drop it into `images/`.
-3. Add the field to that work's line in `data.js`:
+
+2. Name the file — a slug from the brand + title, lowercase with hyphens.
+   For `{ brand: "Atelier Nord", title: "Identity in Motion" }`, use
+   `images/atelier-nord-identity-in-motion.webp`. A descriptive name keeps
+   working if you reorder, add, or delete lines later — a number like
+   `01.webp` wouldn't.
+
+3. Drop it into `images/`.
+
+4. Add the field to that work's line in `data.js`:
 
 ```js
-{ brand: "Client", title: "Project", director: "Role", media: "images/project.webp" },
+{ brand: "Client", title: "Project", director: "Role", media: "images/client-project.webp" },
 ```
+
+   If the subject sits off-center and crops awkwardly on phones, add
+   `focal` — any CSS `background-position` value:
+
+```js
+{ brand: "Client", title: "Project", director: "Role", media: "images/client-project.webp", focal: "center top" },
+```
+
+   Most images won't need it — only set `focal` when the default centered
+   crop loses something important.
+
+5. Quick check before exporting: imagine the image cropped to a tall,
+   narrow rectangle centered on it — does it still work? The same file
+   covers both the wide desktop view and the narrow phone view.
 
 No image? The work keeps its tonal plate. Pick imagery that reads clearly
 light or dark — the text inverts over it automatically.

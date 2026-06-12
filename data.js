@@ -15,7 +15,7 @@
 
 const ARCHIVE = [
   /* Brand & identity systems */
-  { brand: "Atelier Nord",        title: "Identity in Motion",            director: "Design Direction" },
+  { brand: "Barça Miel",          title: "Barça Miel",                    director: "Branding and Ai Direction", media: "images/barca_miel.webp" },
   { brand: "Casa Terra",          title: "A Paper & Ink System",          director: "Design Direction" },
   { brand: "Studio Eleven",       title: "Modular Brand Kit",             director: "Design Direction" },
   { brand: "Mercado Central",     title: "Wayfinding & Voice",            director: "Design Direction" },

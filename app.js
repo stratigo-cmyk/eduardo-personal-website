@@ -267,6 +267,10 @@
     closeMenu();
     if (link.dataset.nav === "archive") {
       scrollToItem(0);
+    } else if (link.dataset.nav === "link") {
+      const href = link.getAttribute("href");      /* real interior page */
+      if (reduced) { window.location.href = href; return; }
+      wipe(() => { window.location.href = href; });
     } else {
       wipe();           /* sweeping editorial transition, returns home */
     }

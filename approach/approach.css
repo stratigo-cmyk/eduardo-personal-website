@@ -1,0 +1,373 @@
+/* ==================================================================
+   EDUARDO MITELMAN — APPROACH (/about/)
+   Built from DESIGN.md: EB Garamond, single weight, high-contrast
+   black/white panels that invert per section, flat + hard-edged
+   (0 radius, no shadow). Header chrome matches the archive (Inter).
+   ================================================================== */
+
+/* ---------- Tokens (from DESIGN.md) ---------- */
+:root {
+  --black:        #000000;
+  --white:        #ffffff;
+  --neutral:      #999999;
+  --accent-blue:  #0000fe;
+  --accent-red:   #ff4f23;
+  --aux-dark:     #7d7d7d;   /* Apple system grey — aux on dark panels */
+  --blend-ink:    #DFDEDC;   /* header/cursor difference tint (matches archive) */
+
+  --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+  --sans:  "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --lh: 1.375;
+  --tracking: -0.01em;
+
+  /* spacing scale (12 / 24 / 48 / 128) */
+  --pad-sm: 12px;
+  --pad-md: 24px;
+  --pad-lg: 48px;
+  --pad-xl: 128px;
+  --gap:    12px;
+
+  --header-h: 120px;
+  --maxw: 1200px;
+
+  /* easings (DESIGN.md Penner set) */
+  --ease-out-expo:    cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-inout-quint: cubic-bezier(0.86, 0, 0.07, 1);
+
+  --t-med:  300ms;
+  --t-slow: 500ms;
+  --t-cine: 900ms;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scrollbar-width: thin;
+}
+
+body {
+  background: var(--white);
+  color: var(--black);
+  font: 400 16px/var(--lh) var(--serif);
+  letter-spacing: var(--tracking);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+::selection { background: var(--black); color: var(--white); }
+
+:focus-visible { outline: 1px solid currentColor; outline-offset: 0.3rem; }
+
+@media (hover: hover) and (pointer: fine) {
+  body, a { cursor: none; }
+}
+
+/* ==================================================================
+   HEADER — fixed, difference-blended so it reads on any panel
+   ================================================================== */
+.header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 100;
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--pad-md) 0 32px;
+  mix-blend-mode: difference;
+  color: var(--blend-ink);
+}
+
+.logo {
+  font: 500 13px/1 var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nav { display: flex; gap: 32px; }
+
+.nav a {
+  position: relative;
+  font: 400 12px/1 var(--sans);
+  letter-spacing: 0.08em;
+  padding: 4px 0;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--t-slow) var(--ease-out-expo);
+}
+.nav a:hover::after,
+.nav a.is-active::after { transform: scaleX(1); transform-origin: left; }
+
+.header-back {
+  display: none;
+  font: 400 12px/1 var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* entrance for header items */
+.logo, .nav a, .header-back {
+  opacity: 0;
+  transform: translate3d(0, -12px, 0);
+  transition: opacity var(--t-cine) var(--ease-out-expo) var(--d, 0ms),
+              transform var(--t-cine) var(--ease-out-expo) var(--d, 0ms);
+}
+.is-loaded .logo,
+.is-loaded .nav a,
+.is-loaded .header-back { opacity: 1; transform: none; }
+
+/* ==================================================================
+   PANELS — full-height inverting sections
+   ================================================================== */
+.panel {
+  min-height: 100vh;
+  display: grid;
+  align-items: center;
+  padding: calc(var(--header-h) + var(--pad-lg)) var(--pad-lg) var(--pad-xl);
+}
+.panel--light { background: var(--white); color: var(--black); }
+.panel--dark  { background: var(--black); color: var(--white); }
+
+.panel-inner {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+/* ---------- Hero ---------- */
+.eyebrow {
+  font: 500 13px/1 var(--sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--neutral);
+  margin-bottom: var(--pad-md);
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 8vw, 88px);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  max-width: 16ch;
+}
+
+.hero-lede {
+  margin-top: var(--pad-lg);
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: var(--lh);
+  max-width: 52ch;
+  color: var(--aux-dark);
+}
+
+/* ---------- Method blocks ---------- */
+.method-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: var(--pad-lg);
+  align-items: start;
+}
+
+.method-rail { display: flex; flex-direction: column; gap: var(--pad-md); }
+
+.counter {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 1;
+  color: var(--neutral);
+}
+.panel--dark .counter { color: var(--aux-dark); }
+
+.method-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(30px, 3.6vw, 52px);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.method-body {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.5;
+  max-width: 46ch;
+}
+.method-body p + p { margin-top: var(--pad-md); }
+
+/* ---------- Closing CTA ---------- */
+.cta-inner { text-align: center; }
+
+.cta-link {
+  position: relative;
+  display: inline-block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(36px, 7vw, 80px);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+.cta-link::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0.08em;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--t-cine) var(--ease-out-expo);
+}
+.cta-link:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* ==================================================================
+   FOOTER — matches the archive
+   ================================================================== */
+.footer {
+  background: var(--white);
+  color: var(--black);
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+  padding: 12rem 3.2rem 2.4rem;
+}
+
+.footer-statement {
+  max-width: 72rem;
+  margin: 0 auto 9.6rem;
+  text-align: center;
+  font: italic 400 clamp(24px, 4vw, 40px)/1.3 var(--serif);
+  letter-spacing: -0.01em;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 2.4rem;
+  align-items: end;
+  padding-top: 2.4rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.14);
+}
+
+.footer-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+.footer-list a {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  font: 400 12px/1.6 var(--sans);
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.56);
+  transition: color var(--t-med) ease;
+}
+.footer-list a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 100%; height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--t-slow) var(--ease-out-expo);
+}
+.footer-list a:hover { color: var(--black); }
+.footer-list a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.footer-copy {
+  font: 400 11px/1.6 var(--sans);
+  letter-spacing: 0.06em;
+  color: rgba(0, 0, 0, 0.56);
+  text-align: right;
+}
+
+/* ==================================================================
+   VEIL (page transition) + CURSOR
+   ================================================================== */
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #F9F8F6;
+  transform: translate3d(0, 101%, 0);
+  pointer-events: none;
+}
+.veil.is-in {
+  transform: translate3d(0, 0, 0);
+  transition: transform var(--t-cine) var(--ease-inout-quint);
+}
+
+.cursor {
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 9999;
+  width: 12px; height: 12px;
+  border-radius: 100%;
+  background: var(--blend-ink);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--t-med) ease;
+  will-change: transform;
+}
+.is-loaded .cursor { opacity: 1; }
+
+@media (hover: none), (pointer: coarse) {
+  .cursor { display: none; }
+}
+
+/* ==================================================================
+   SCROLL REVEAL
+   ================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity var(--t-cine) var(--ease-out-expo) var(--d, 0ms),
+              transform var(--t-cine) var(--ease-out-expo) var(--d, 0ms);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* ==================================================================
+   RESPONSIVE — single mental breakpoint, mobile chrome swap
+   ================================================================== */
+@media (max-width: 743px) {
+  .header { padding: 0 20px; height: 88px; }
+  .nav { display: none; }
+  .header-back { display: inline-block; }
+
+  .panel { padding: calc(88px + var(--pad-lg)) var(--pad-md) var(--pad-xl); }
+
+  .method-inner { grid-template-columns: 1fr; gap: var(--pad-md); }
+  .method-rail { gap: var(--pad-sm); }
+
+  .footer { padding: 8rem 2rem 2.4rem; }
+  .footer-statement { margin-bottom: 6.4rem; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .footer-copy { grid-column: 1 / -1; text-align: left; }
+}
+
+/* ==================================================================
+   REDUCED MOTION
+   ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+  body, a { cursor: auto; }
+  .cursor { display: none; }
+}

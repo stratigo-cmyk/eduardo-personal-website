@@ -19,6 +19,7 @@ const ARCHIVE = [
   { brand: "StartUp Nation Central", title: "StartUp Nation Central",       director: "Branding, UX / UI", media: "images/startup-nation-central.webp" },
   { brand: "Questar",             title: "Questar",                      director: "Branding, UX, UI", media: "images/questar.webp" },
   { brand: "Amiad",               title: "Amiad",                        director: "Web UX / UI / DEV", media: "images/amid.webp" },
+  { brand: "Manna Irrigation",    title: "Manna Irrigation",              director: "Branding, Identity, UX, UI", media: "images/manna-irrigation.webp" },
   { brand: "Mercado Central",     title: "Wayfinding & Voice",            director: "Design Direction" },
   { brand: "North Harbor",        title: "Maritime Editorial",            director: "Design Direction" },
   { brand: "Galeria Uno",         title: "Exhibition Identity",           director: "Design Direction" },

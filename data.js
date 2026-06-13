@@ -18,6 +18,7 @@ const ARCHIVE = [
   { brand: "Barça Miel",          title: "Barça Miel",                    director: "Branding and Ai Direction", media: "images/barca_miel.webp" },
   { brand: "StartUp Nation Central", title: "StartUp Nation Central",       director: "Branding, UX / UI", media: "images/startup-nation-central.webp" },
   { brand: "Questar",             title: "Questar",                      director: "Branding, UX, UI", media: "images/questar.webp" },
+  { brand: "Amiad",               title: "Amiad",                        director: "Web UX / UI / DEV", media: "images/amid.webp" },
   { brand: "Mercado Central",     title: "Wayfinding & Voice",            director: "Design Direction" },
   { brand: "North Harbor",        title: "Maritime Editorial",            director: "Design Direction" },
   { brand: "Galeria Uno",         title: "Exhibition Identity",           director: "Design Direction" },

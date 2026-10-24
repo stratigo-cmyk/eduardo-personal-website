@@ -106,6 +106,7 @@
     ['nearlyEqual(t2.saving, 1146) && nearlyEqual(t2.preserved, 1146) && nearlyEqual(t2.required, 9979)','nearlyEqual(t2.saving, 3700) && nearlyEqual(t2.preserved, 3700) && nearlyEqual(t2.required, 8375)','5000 academy'],
     ['nearlyEqual(t3.saving, 8146) && nearlyEqual(t3.preserved, 8146) && nearlyEqual(t3.required, 2979)','nearlyEqual(t3.saving, 10700) && nearlyEqual(t3.preserved, 10700) && nearlyEqual(t3.required, 425)','12000 academy'],
     ['const t4 = scenario(3854);','const t4 = scenario(1300);','break even'],
+    ['nearlyEqual(t4.full, 23429)','nearlyEqual(t4.full, 20875)','break-even total'],
     ['const actualDeficit = 23429 - (8450 + actualDraw);','const actualDeficit = 20875 - (8450 + actualDraw);','fund cap'],
     ['nearlyEqual(actualDeficit, 13979)','nearlyEqual(actualDeficit, 11425)','fund deficit'],
     ['const CREDIT_CARD_BASELINE = 4570;','const CREDIT_CARD_BASELINE = 6000;','credit budget constant'],

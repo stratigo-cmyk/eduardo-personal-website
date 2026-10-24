@@ -102,7 +102,7 @@
        '    function renderExpenseInputs() {',
        '      const base=expenseTotal(), card=creditCardBudget();',
        '      const rest=fromCents(toCents(base)-toCents(card));',
-       '      document.getElementById("expense-grid").innerHTML = "<div class=\"expense-line\"><span>יתר הוצאות (ללא אשראי)</span><strong class=\"num\">"+formatMoney(rest)+"</strong></div><div class=\"expense-line\"><span>ממוצע אשראי בתוך התקציב</span><strong class=\"num\">"+formatMoney(card)+"</strong></div>";',
+       '      document.getElementById("expense-grid").textContent = "שאר הוצאות: "+formatMoney(rest)+" | ממוצע אשראי: "+formatMoney(card);',
        '    }',''
       ].join('\n');
       s=s.slice(0,exBegin)+simplified+s.slice(exEnd);

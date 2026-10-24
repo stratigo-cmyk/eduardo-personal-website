@@ -40,6 +40,9 @@
     text=text.replace(/<thead>[\s\S]*?<\/thead>/,header);
     text=text.replace('</head>',compact+'</head>');
     text=text.replace('</body>',painter+persist+'</body>');
+    // Remove the full-period snapshot section; keep the monthly calculations and saved data.
+    text=text.replace(/<section\s+aria-labelledby="summary-title">[\s\S]*?<\/section>/, '');
+    text=text.replace('      renderSummary(calculation);','');
     document.open();
     document.write(text);
     document.close();

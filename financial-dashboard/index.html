@@ -41,7 +41,7 @@
 
     text=text.replace(/<thead>[\s\S]*?<\/thead>/,header);
     text=text.replace('</head>',compact+'<style>.desktop-table tbody td[data-field="creditCardActual"],.desktop-table tbody td[data-field="creditCardYearly"]{display:none!important}</style></head>');
-    text=text.replace('</body>',painter+persist+'<script src="credit-panel-runtime.js?v=20261025panel2"><\/script></body>');
+    text=text.replace('</body>',painter+persist+'<script src="credit-panel-runtime.js?v=20261025panel2"><\/script><script src="equal-11-columns.js?v=20261025equal11"><\/script></body>');
     // Remove the full-period snapshot section; keep the monthly calculations and saved data.
     text=text.replace(/<section\s+aria-labelledby="summary-title">[\s\S]*?<\/section>/, '');
     text=text.replace('      renderSummary(calculation);','');

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow,noarchive">
+<title>שחזור נתונים | דשבורד פיננסי</title>
+<style>
+:root{font-family:Arial,"Noto Sans Hebrew",sans-serif;color:#153944;background:#f4f7f8;font-size:16px}*{box-sizing:border-box}body{max-width:960px;margin:36px auto;padding:0 18px}main{background:white;border:1px solid #d4e0e4;border-radius:14px;padding:26px}h1{margin:0 0 16px;font-size:26px}p{line-height:1.65}table{width:100%;border-collapse:collapse;margin:18px 0}td,th{padding:12px;text-align:right;border-bottom:1px solid #dce5e8;vertical-align:middle}th{background:#153944;color:white}button{border:0;border-radius:7px;padding:11px 16px;font-size:14px;cursor:pointer;background:#155e70;color:white}button.secondary{background:#e1eff0;color:#163f48}button:disabled{opacity:.45;cursor:default}button.warn{background:#a24523}button+button{margin-right:7px}.muted{color:#607782}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.notice{padding:12px 15px;border:1px solid #becfd4;background:#f2f7f8;border-radius:8px}.status{font-weight:600;white-space:pre-wrap;margin-top:15px}.good{color:#087759}.bad{color:#a63d30}.chip{display:inline-block;background:#e1f6e6;border-radius:20px;padding:4px 9px}small{font-size:13px}@media(max-width:640px){main{padding:15px}td,th{padding:7px 5px;font-size:12px}button{padding:9px 7px;font-size:12px}}
+</style></head>
+<body><main>
+<h1>שחזור נתוני הדשבורד</h1>
+<p>עמוד זה פועל רק בדפדפן שלך. הוא בודק עותקים שנשמרו במכשיר, ללא שליחת נתונים לשרת או ל-GitHub. <b>הבדיקה אינה משנה או מוחקת נתונים.</b></p>
+<div class="notice">פתח את העמוד הזה דרך <b>www.stratigo.com</b> באותו דפדפן שבו הזנת את הנתונים. אין לנקות נתוני גלישה לפני השחזור.</div>
+<div class="actions">
+<button id="scan">בדוק עותקים שמורים</button>
+<button id="backup" class="secondary">הורד גיבוי של כל הנתונים שנמצאו</button>
+<button id="dashboard" class="secondary">חזור לדשבורד</button>
+</div>
+<div id="results" aria-live="polite"></div>
+<p class="status" id="status" aria-live="polite"></p>
+<p class="muted"><small>הערה: עותק משוחזר יחליף את הקובץ הנוכחי רק לאחר לחיצה מפורשת על ״שחזר״. לפני שחזור ניצור גיבוי נוסף ונוריד קובץ למחשב.</small></p>
+</main>
+<script>
+(()=>{
+'use strict';
+const MAIN='eduardoMonthlyFinancialAssistantV2', OVERLAY='eduardoFinancialDashboardV3';
+const KEYS=[MAIN,MAIN+':session','eduardoMonthlyFinancialAssistant','monthlyFinancialAssistant','academicIncomeModel','incomeModelData',OVERLAY];
+const all=[];
+const $=id=>document.getElementById(id);
+const sanitize=x=>String(x??'').replace(/[&,<>"]/g,ch=>({'&':'&amp;',',':',','<':'&lt;','>':'&gt;','"':'&quot;'}[ch]||ch));
+const valid=v=>v!==null&&v!==undefined&&String(v).trim()!=='';
+function fields(o){
+ const actuals=o?.actuals||o?.actualNet||{}, savings=o?.monthlySavings||o?.bankLeumiSavings||{}, cc=o?.monthlyCreditCard||{};
+ const actual=Object.entries(actuals).reduce((n,[k,v])=>n+(v&&typeof v==='object'?Object.values(v).filter(valid).length:0),0);
+ return {actual,savings:Object.values(savings).filter(valid).length,cc:Object.values(cc).filter(valid).length};
+}
+function overlayCounts(o){
+ const entries=Object.entries(o||{}).filter(([k,v])=>typeof v==='object'&&v&&valid(v.v));
+ const actual=entries.filter(([key])=>key.startsWith('id:actual-')).length;
+ return {actual,savings:entries.filter(([key])=>key.includes('monthly-saving-input')).length,cc:entries.filter(([key])=>key.includes('monthly-credit-input')).length,raw:entries.length};
+}
+function count(c){return (c.actual||0)+(c.savings||0)+(c.cc||0)}
+function readStore(store,k,label){
+ try{const raw=store.getItem(k);if(!raw)return;
+ const data=JSON.parse(raw);if(!data||typeof data!=='object')return;
+ const overlay=k===OVERLAY;
+ const counts=overlay?overlayCounts(data):fields(data);
+ all.push({id:all.length,label,kind:k,source:store===localStorage?'local':'session',data,counts,updated:data.updatedAt||store.getItem(OVERLAY+':last')||''});
+ }catch(e){all.push({id:all.length,label,kind:k,error:String(e),source:store===localStorage?'local':'session'})}
+}
+function scan(){
+ all.length=0;
+ for(const k of KEYS){const src=k.endsWith(':session')?sessionStorage:localStorage;readStore(src,k,k.replace('eduardoMonthlyFinancialAssistantV2','קובץ המודל הראשי').replace('eduardoFinancialDashboardV3','עותק שדות נוסף'))}
+ const list=all.filter(r=>r.data);
+ $('results').innerHTML=list.length?'<table><thead><tr><th>מקור</th><th>משכורות שהוזנו</th><th>חסכונות</th><th>אשראי</th><th>פעולה</th></tr></thead><tbody>'+
+  list.map(r=>'<tr><td><b>'+sanitize(r.label)+'</b><br><small>'+sanitize(r.source)+'</small></td><td>'+r.counts.actual+'</td><td>'+r.counts.savings+'</td><td>'+r.counts.cc+'</td><td><button data-restore="'+r.id+'" '+(count(r.counts)===0?'disabled':'')+'>שחזר</button></td></tr>').join('')+'</tbody></table>'
+  :'<p class="bad">לא נמצאו נתונים שמורים במקור האתר הזה. ייתכן שהנתונים נמצאים בדומיין אחר, בדפדפן אחר או בקובץ גיבוי שהורד.</p>';
+ $('status').textContent='נמצאו '+list.length+' עותקי נתונים. השחזור עדיין לא בוצע.';
+}
+function download(data,name){
+ const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download=name;a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function backup(){
+ const raw={capturedAt:new Date().toISOString(),origin:location.origin,local:{},session:{}};
+ for(const k of KEYS){
+   try{const v=localStorage.getItem(k);if(v!==null)raw.local[k]=v}catch(_){}
+   try{const v=sessionStorage.getItem(k);if(v!==null)raw.session[k]=v}catch(_){}
+ }
+ download(raw,'financial-dashboard-recovery-'+new Date().toISOString().slice(0,10)+'.json');
+ return raw;
+}
+function mergeOverlay(overlay,base){
+ const out=JSON.parse(JSON.stringify(base||{}));
+ out.actuals ||= {};out.monthlySavings ||= {};out.monthlyCreditCard ||= {};
+ for(const [k,obj] of Object.entries(overlay||{})){
+  if(!obj||typeof obj!=='object'||!valid(obj.v))continue;
+  const m=k.match(/^id:actual-(\d{4}-\d{2})-(haifaExternal|openUniversity|haifa|bezalel|ariel)$/);
+  if(m){const v=Number(String(obj.v).replace(/,/g,''));if(Number.isFinite(v)&&v>=0){out.actuals[m[1]]||={};out.actuals[m[1]][m[2]]=v}continue;}
+  const m2=k.match(/^id:(?:monthly-saving|saving)-(\d{4}-\d{2})$/);
+  if(m2){const v=Number(String(obj.v).replace(/,/g,''));if(Number.isFinite(v)&&v>=0)out.monthlySavings[m2[1]]=v;}
+ }
+ return out;
+}
+function restore(id){
+ const item=all.find(r=>r.id===id);
+ if(!item?.data)return;
+ const ok=confirm('להוריד תחילה גיבוי ולשחזר את העותק שנבחר? הפעולה תחליף את מצב הדשבורד הנוכחי.');if(!ok)return;
+ backup();
+ let restored=item.data;
+ if(item.kind===OVERLAY){
+   const other=all.filter(r=>r.kind!==OVERLAY&&r.data).sort((a,b)=>count(b.counts)-count(a.counts))[0];
+   restored=mergeOverlay(item.data,other?.data||{});
+ }
+ restored.updatedAt=new Date().toISOString();
+ const key='financial-dashboard-previous-'+Date.now();
+ try{
+  const current=localStorage.getItem(MAIN);
+  if(current!==null)localStorage.setItem(key,current);
+  localStorage.setItem(MAIN,JSON.stringify(restored));
+  try{sessionStorage.removeItem(MAIN+':session')}catch(_){}
+  try{localStorage.removeItem(OVERLAY)}catch(_){}
+  $('status').innerHTML='<span class="good">השחזור נשמר. כעת לחץ על ״חזור לדשבורד״.</span>';
+ }catch(e){$('status').textContent='לא ניתן לכתוב את העותק השמור: '+e.message;}
+}
+$('scan').addEventListener('click',scan);
+$('backup').addEventListener('click',()=>{backup();$('status').textContent='הגיבוי הורד למחשב.'});
+$('dashboard').addEventListener('click',()=>{location.href='./?v=20261101restore'});
+$('results').addEventListener('click',e=>{const el=e.target.closest('button[data-restore]');if(el)restore(Number(el.dataset.restore))});
+scan();
+})();
+</script></body></html>
